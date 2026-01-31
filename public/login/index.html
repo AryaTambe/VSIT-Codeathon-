@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Fintrack</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/jpeg" href="/favsmall.png">
+</head>
+<body>
+    <header>
+        <nav id="main-nav">
+            <a class="nav-link-home" href="/">
+                <img src="/favsmall.png" alt="Logo" class="nav-logo">
+                <p>Fintrack - Your Personal Finance Tracker</p>
+            </a>
+            <div class="nav-link-container">
+                <a class="nav-link active" href="/login">Login</a>
+                <a class="nav-link" href="/register">Register</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="auth">
+            <div class="auth-card">
+                <h2>Login</h2>
+                <form id="loginForm" action="/login" method="post">
+                    <label>Email
+                        <input type="email" name="email" required>
+                    </label>
+                    <label>Password
+                        <input type="password" name="password" required>
+                    </label>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <p class="auth-switch">Don't have an account? <a href="/register">Register</a></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Fintrack. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

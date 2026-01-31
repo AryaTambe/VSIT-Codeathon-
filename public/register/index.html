@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — Fintrack</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/jpeg" href="/favsmall.png">
+</head>
+<body>
+    <header>
+        <nav id="main-nav">
+            <a class="nav-link-home" href="/">
+                <img src="/favsmall.png" alt="Logo" class="nav-logo">
+                <p>Fintrack - Your Personal Finance Tracker</p>
+            </a>
+            <div class="nav-link-container">
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link active" href="/register">Register</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="auth">
+            <div class="auth-card">
+                <h2>Create account</h2>
+                <form id="registerForm" action="/register" method="post">
+                    <label>Full name
+                        <input type="text" name="name" required>
+                    </label>
+                    <label>Email
+                        <input type="email" name="email" required>
+                    </label>
+                    <label>Password
+                        <input type="password" name="password" required>
+                    </label>
+                    <label>Confirm password
+                        <input type="password" name="confirm" required>
+                    </label>
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+                <p class="auth-switch">Already have an account? <a href="/login">Login</a></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Fintrack. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

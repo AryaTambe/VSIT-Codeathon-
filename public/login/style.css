@@ -1,0 +1,60 @@
+/* Local styles for login page main area */
+.auth {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background-color: lightgray;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.auth-card h2 {
+  margin-bottom: 1rem;
+  color: darkslategray;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.auth-card label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  color: #556270;
+}
+
+.auth-card input[type="email"],
+.auth-card input[type="password"],
+.auth-card input[type="text"] {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d0d7dd;
+  border-radius: 6px;
+  margin-top: 0.35rem;
+}
+
+/* remember-me removed */
+
+.btn-primary {
+  background-color: green;
+  color: burlywood;
+  border: 2px solid green;
+  padding: 0.65rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-switch {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
