@@ -1,0 +1,1 @@
+Personal Finance Tracker – Students and young adults struggle to track income and expenses. Challenge: Create a web application that helps users track, categorize, and visualize personal finances.
