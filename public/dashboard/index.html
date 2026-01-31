@@ -4,115 +4,154 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — Fintrack</title>
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" type="image/jpeg" href="/favsmall.png">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>
-<body>
-  <header>
-    <nav id="main-nav">
-      <a class="nav-link-home" href="/">
-        <img src="/favsmall.png" alt="Logo" class="nav-logo">
-        <p>Fintrack - Your Personal Finance Tracker</p>
+<body class="bg-gray-50">
+  <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg sticky top-0 z-50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 hover:opacity-90 transition">
+        <img src="/favsmall.png" alt="Logo" class="w-10 h-10">
+        <p class="font-bold text-lg hidden sm:block">Fintrack</p>
       </a>
-      <div class="nav-link-container">
-        <span id="userGreeting" style="margin-right: 1rem;"></span>
-        <a class="nav-link" href="/logout">Logout</a>
+      <div class="flex items-center gap-4">
+        <span id="userGreeting" class="text-blue-100 hidden sm:block"></span>
+        <a href="/logout" class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 font-semibold transition">Logout</a>
       </div>
     </nav>
   </header>
 
-  <main>
-    <section class="dashboard">
-      <div class="dashboard-header">
-        <h2>Your Financial Dashboard</h2>
-        <div class="user-info">
-          <p><strong>User ID:</strong> <span id="userId">loading...</span></p>
-          <p><strong>Name:</strong> <span id="userName">loading...</span></p>
-          <p><strong>Email:</strong> <span id="userEmail">loading...</span></p>
+  <main class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <section class="max-w-7xl mx-auto">
+      <!-- User Info Card -->
+      <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <p class="text-gray-600 text-sm">User ID</p>
+            <p class="text-2xl font-bold text-gray-900" id="userId">loading...</p>
+          </div>
+          <div>
+            <p class="text-gray-600 text-sm">Name</p>
+            <p class="text-2xl font-bold text-gray-900" id="userName">loading...</p>
+          </div>
+          <div>
+            <p class="text-gray-600 text-sm">Email</p>
+            <p class="text-2xl font-bold text-gray-900 truncate" id="userEmail">loading...</p>
+          </div>
         </div>
       </div>
 
-      <!-- Charts Section -->
-      <div class="charts-section">
-        <div class="chart-container">
-          <h3>Expenses by Category</h3>
-          <canvas id="expenseChart"></canvas>
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Sidebar -->
+        <div class="lg:col-span-1 space-y-6">
+          <!-- Pie Charts -->
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Expenses by Category</h3>
+            <canvas id="expenseChart" class="max-h-64"></canvas>
+          </div>
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Income by Category</h3>
+            <canvas id="incomeChart" class="max-h-64"></canvas>
+          </div>
         </div>
-        <div class="chart-container">
-          <h3>Income by Category</h3>
-          <canvas id="incomeChart"></canvas>
-        </div>
-      </div>
 
-      <div class="dashboard-content">
-        <!-- Add Transaction Form -->
-        <div class="form-section">
-          <h3>Add Income or Expense</h3>
-          <form id="transactionForm">
-            <div class="form-group">
-              <label>Type
-                <select name="type" required>
+        <!-- Main Content -->
+        <div class="lg:col-span-3 space-y-6">
+          <!-- Comparison Chart -->
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Income vs Expenses</h3>
+            <canvas id="comparisonChart" class="max-h-80"></canvas>
+          </div>
+
+          <!-- Summary Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-md p-6 border-l-4 border-green-500">
+              <p class="text-gray-700 font-semibold text-sm uppercase tracking-wide mb-2">Total Income</p>
+              <p class="text-3xl font-bold text-green-700" id="totalIncome">₹0.00</p>
+            </div>
+            <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl shadow-md p-6 border-l-4 border-red-500">
+              <p class="text-gray-700 font-semibold text-sm uppercase tracking-wide mb-2">Total Expenses</p>
+              <p class="text-3xl font-bold text-red-700" id="totalExpense">₹0.00</p>
+            </div>
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-md p-6 border-l-4 border-blue-500">
+              <p class="text-gray-700 font-semibold text-sm uppercase tracking-wide mb-2">Balance</p>
+              <p class="text-3xl font-bold text-blue-700" id="totalBalance">₹0.00</p>
+            </div>
+          </div>
+
+          <!-- Add Transaction Form -->
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-6">Add Transaction</h3>
+            <form id="transactionForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-900 mb-2">Type *</label>
+                <select name="type" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
                   <option value="">Choose...</option>
                   <option value="income">Income</option>
                   <option value="expense">Expense</option>
                 </select>
-              </label>
-            </div>
-            <div class="form-group">
-              <label>Amount
-                <input type="number" name="amount" step="0.01" min="0" required>
-              </label>
-            </div>
-            <div class="form-group">
-              <label>Category
-                <input type="text" name="category" placeholder="e.g., Salary, Groceries">
-              </label>
-            </div>
-            <div class="form-group">
-              <label>Description
-                <input type="text" name="description" placeholder="Optional">
-              </label>
-            </div>
-            <div class="form-group">
-              <label>Date
-                <input type="date" name="date" required>
-              </label>
-            </div>
-            <button type="submit" class="btn-primary">Add Transaction</button>
-          </form>
-        </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-900 mb-2">Amount *</label>
+                <input type="number" name="amount" step="0.01" min="0" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" placeholder="0.00">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-900 mb-2">Category *</label>
+                <select name="category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+                  <option value="">Choose a category...</option>
+                  <optgroup label="Income">
+                    <option value="Salary">Salary</option>
+                    <option value="Freelance">Freelance</option>
+                    <option value="Business">Business</option>
+                    <option value="Investment">Investment</option>
+                    <option value="Bonus">Bonus</option>
+                    <option value="Other Income">Other Income</option>
+                  </optgroup>
+                  <optgroup label="Expense">
+                    <option value="Food">Food</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Education">Education</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Other Expense">Other Expense</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-900 mb-2">Date *</label>
+                <input type="date" name="date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-900 mb-2">Description</label>
+                <input type="text" name="description" placeholder="Optional notes" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition">
+              </div>
+              <div class="md:col-span-2">
+                <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg transition">Add Transaction</button>
+              </div>
+            </form>
+          </div>
 
-        <!-- Summary -->
-        <div class="summary-section">
-          <div class="summary-card income">
-            <h4>Total Income</h4>
-            <p class="amount" id="totalIncome">$0.00</p>
-          </div>
-          <div class="summary-card expense">
-            <h4>Total Expenses</h4>
-            <p class="amount" id="totalExpense">$0.00</p>
-          </div>
-          <div class="summary-card balance">
-            <h4>Balance</h4>
-            <p class="amount" id="totalBalance">$0.00</p>
-          </div>
-        </div>
-
-        <!-- Transactions List -->
-        <div class="transactions-section">
-          <h3>Your Transactions</h3>
-          <div id="transactionsList" class="transactions-list">
-            <p>Loading transactions...</p>
+          <!-- Transactions List -->
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-6">Recent Transactions</h3>
+            <div id="transactionsList" class="space-y-3 max-h-96 overflow-y-auto">
+              <p class="text-gray-500 text-center py-8">Loading transactions...</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2024 Fintrack. All rights reserved.</p>
+  <footer class="bg-gray-900 text-gray-300 py-8 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p>&copy; 2024 Fintrack. All rights reserved. | Manage your finances with confidence.</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>

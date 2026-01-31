@@ -4,6 +4,7 @@ document.querySelector('input[name="date"]').valueAsDate = new Date();
 // Chart instances
 var expenseChart = null;
 var incomeChart = null;
+var comparisonChart = null;
 
 // Fetch and display user data
 fetch('/api/me')
@@ -105,26 +106,37 @@ function displayTransactions(transactions) {
   var container = document.getElementById('transactionsList');
 
   if (transactions.length === 0) {
-    container.innerHTML = '<p class="empty-state">No transactions yet. Add one to get started!</p>';
+    container.innerHTML = '<div class="text-center py-12"><p class="text-gray-500 text-lg">No transactions yet. Add one to get started!</p></div>';
     return;
   }
 
   container.innerHTML = transactions.map(function(t) {
     var date = new Date(t.date).toLocaleDateString();
-    var amountClass = t.type === 'income' ? 'income' : 'expense';
-    var amountSign = t.type === 'income' ? '+' : '-';
+    var isIncome = t.type === 'income';
+    var amountSign = isIncome ? '+' : '-';
+    var amountColor = isIncome ? 'text-green-700' : 'text-red-700';
+    var amountBg = isIncome ? 'bg-green-50' : 'bg-red-50';
 
     return `
-      <div class="transaction-item">
-        <div class="transaction-info">
-          <div class="category">${t.category || '(No category)'}</div>
-          <div class="description">${t.description || ''}</div>
-          <div class="date">${date}</div>
+      <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-sm transition">
+        <div class="flex-1">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg ${amountBg} flex items-center justify-center font-bold ${amountColor}">
+              ${amountSign}
+            </div>
+            <div class="flex-1">
+              <p class="font-semibold text-gray-900">${t.category || '(No category)'}</p>
+              <p class="text-sm text-gray-600">${t.description || 'No description'}</p>
+              <p class="text-xs text-gray-500 mt-1">${date}</p>
+            </div>
+          </div>
         </div>
-        <div class="transaction-amount ${amountClass}">${amountSign}₹${t.amount.toFixed(2)}</div>
-        <div class="transaction-actions">
-          <button class="btn-small btn-edit" onclick="editTransaction(${t.id}, '${t.type}', ${t.amount}, '${t.category || ''}', '${t.description || ''}', '${t.date}')">Edit</button>
-          <button class="btn-small btn-delete" onclick="deleteTransaction(${t.id})">Delete</button>
+        <div class="text-right mr-4">
+          <p class="text-lg font-bold ${amountColor}">₹${t.amount.toFixed(2)}</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition" onclick="editTransaction(${t.id}, '${t.type}', ${t.amount}, '${t.category || ''}', '${t.description || ''}', '${t.date}')">Edit</button>
+          <button class="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-lg transition" onclick="deleteTransaction(${t.id})">Delete</button>
         </div>
       </div>
     `;
@@ -208,6 +220,9 @@ function updateCharts(transactions) {
     incomeChart,
     function(chart) { incomeChart = chart; }
   );
+
+  // Render comparison bar chart
+  renderComparisonChart(transactions);
 }
 
 // Render or update a pie chart
@@ -282,4 +297,65 @@ function renderPieChart(canvasId, label, dataObj, existingChart, updateRef) {
   });
 
   updateRef(chart);
+}
+
+// Render comparison bar chart (income vs expenses)
+function renderComparisonChart(transactions) {
+  var totalIncome = 0;
+  var totalExpense = 0;
+
+  transactions.forEach(function(t) {
+    if (t.type === 'income') {
+      totalIncome += t.amount;
+    } else if (t.type === 'expense') {
+      totalExpense += t.amount;
+    }
+  });
+
+  var ctx = document.getElementById('comparisonChart').getContext('2d');
+
+  if (comparisonChart) {
+    comparisonChart.destroy();
+  }
+
+  comparisonChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Total Income', 'Total Expenses'],
+      datasets: [{
+        label: 'Amount (₹)',
+        data: [totalIncome, totalExpense],
+        backgroundColor: ['#4CAF50', '#FF6B6B'],
+        borderColor: ['#45a049', '#ff5252'],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      indexAxis: 'y',
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return '₹' + context.parsed.x.toFixed(2);
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Amount (₹)'
+          }
+        }
+      }
+    }
+  });
 }

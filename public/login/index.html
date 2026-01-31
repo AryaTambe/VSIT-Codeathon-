@@ -4,42 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — Fintrack</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/jpeg" href="/favsmall.png">
 </head>
-<body>
-    <header>
-        <nav id="main-nav">
-            <a class="nav-link-home" href="/">
-                <img src="/favsmall.png" alt="Logo" class="nav-logo">
-                <p>Fintrack - Your Personal Finance Tracker</p>
+<body class="bg-gradient-to-br from-blue-50 to-blue-100">
+    <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 hover:opacity-90 transition">
+                <img src="/favsmall.png" alt="Logo" class="w-10 h-10">
+                <p class="font-bold text-lg hidden sm:block">Fintrack</p>
             </a>
-            <div class="nav-link-container">
-                <a class="nav-link active" href="/login">Login</a>
-                <a class="nav-link" href="/register">Register</a>
+            <div class="flex gap-3">
+                <a href="/login" class="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 font-semibold transition">Login</a>
+                <a href="/register" class="px-4 py-2 rounded-lg bg-white text-blue-600 font-semibold hover:bg-gray-100 transition">Register</a>
             </div>
         </nav>
     </header>
-    <main>
-        <section class="auth">
-            <div class="auth-card">
-                <h2>Login</h2>
-                <form id="loginForm" action="/login" method="post">
-                    <label>Email
-                        <input type="email" name="email" required>
-                    </label>
-                    <label>Password
-                        <input type="password" name="password" required>
-                    </label>
-                    <button type="submit" class="btn-primary">Login</button>
+
+    <main class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-2xl shadow-2xl p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Welcome Back</h1>
+                    <p class="text-gray-600 mt-2">Sign in to your Fintrack account</p>
+                </div>
+
+                <form id="loginForm" action="/login" method="post" class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+                        <input type="email" name="email" id="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" placeholder="you@example.com">
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-900 mb-2">Password</label>
+                        <input type="password" name="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" placeholder="••••••••">
+                    </div>
+
+                    <button type="submit" class="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg transition">Sign In</button>
                 </form>
-                <p class="auth-switch">Don't have an account? <a href="/register">Register</a></p>
+
+                <p class="text-center text-gray-600 text-sm mt-6">
+                    Don't have an account? 
+                    <a href="/register" class="text-blue-600 font-semibold hover:text-blue-700">Register here</a>
+                </p>
             </div>
-        </section>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2024 Fintrack. All rights reserved.</p>
+
+    <footer class="bg-gray-900 text-gray-300 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Fintrack. All rights reserved.</p>
+        </div>
     </footer>
     
     <script src="script.js"></script>

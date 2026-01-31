@@ -3,52 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Fintrack - Your Personal Finance Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/jpeg" href="/favsmall.png">
 </head>
-<body>
-    <header>
-        <nav id="main-nav">
-            <a class="nav-link-home" href="/">
-                <img src="/favsmall.png" alt="Logo" class="nav-logo">
-                <p>Fintrack - Your Personal Finance Tracker</p>
+<body class="bg-gray-50">
+    <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 hover:opacity-90 transition">
+                <img src="/favsmall.png" alt="Logo" class="w-10 h-10">
+                <p class="font-bold text-lg hidden sm:block">Fintrack</p>
             </a>
-            <div class="nav-link-container">
-                <a class="nav-link" href="/login">Login</a>
-                <a class="nav-link" href="/register">Register</a>
+            <div class="flex gap-3">
+                <a href="/login" class="px-4 py-2 rounded-lg bg-white text-blue-600 font-semibold hover:bg-gray-100 transition">Login</a>
+                <a href="/register" class="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-400 font-semibold transition">Register</a>
             </div>
         </nav>
     </header>
-    <main>
-        <section class="hero">
-            <div class="hero-grid">
-                <div class="hero-card">
-                    <div class="hero-media">
-                        <img src="/confin.avif" alt="Finance illustration" class="hero-image">
-                    </div>
-                    <div class="hero-body">
-                        <h1 class="hero-title">Welcome to Fintrack</h1>
-                        <p class="hero-sub">Personal Finance Tracker — track, categorize, and visualize your income and expenses with ease.</p>
-                        <p class="hero-sub">Designed for students and young adults starting their financial journey.</p>
+
+    <main class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <section class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Hero Card -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition">
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <div class="bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center p-8">
+                                <img src="/confin.avif" alt="Finance illustration" class="w-full h-auto object-cover">
+                            </div>
+                            <div class="p-8 flex flex-col justify-center">
+                                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Welcome to Fintrack</h1>
+                                <p class="text-gray-600 text-lg mb-4">Personal Finance Tracker — track, categorize, and visualize your income and expenses with ease.</p>
+                                <p class="text-gray-600 text-lg">Designed for students and young adults starting their financial journey.</p>
+                                <div class="mt-8 flex gap-4">
+                                    <a href="/register" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg transition">Get Started</a>
+                                    <a href="/login" class="px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition">Sign In</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <aside class="bulletin">
-                    <h3>Fintrack Highlights</h3>
-                    <ul>
-                        <li><strong>Accountability:</strong> Keep track of daily spending and stick to budgets.</li>
-                        <li><strong>Growth:</strong> Build better money habits and long-term financial health.</li>
-                        <li><strong>Savings:</strong> Set and monitor savings goals with simple tools.</li>
-                        <li><strong>Insights:</strong> Visualize trends to make smarter decisions.</li>
-                        <li><strong>Community:</strong> Learn tips and find motivation from peers.</li>
+                <!-- Highlights Sidebar -->
+                <aside class="bg-white rounded-2xl shadow-xl p-8 h-fit sticky top-4">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Why Fintrack?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3">
+                            <span class="text-blue-600 font-bold text-xl">✓</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Accountability</p>
+                                <p class="text-gray-600 text-sm">Keep track of daily spending and stick to budgets.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-blue-600 font-bold text-xl">✓</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Growth</p>
+                                <p class="text-gray-600 text-sm">Build better money habits and long-term financial health.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-blue-600 font-bold text-xl">✓</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Savings</p>
+                                <p class="text-gray-600 text-sm">Set and monitor savings goals with simple tools.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-blue-600 font-bold text-xl">✓</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Insights</p>
+                                <p class="text-gray-600 text-sm">Visualize trends to make smarter decisions.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-blue-600 font-bold text-xl">✓</span>
+                            <div>
+                                <p class="font-semibold text-gray-900">Community</p>
+                                <p class="text-gray-600 text-sm">Learn tips and find motivation from peers.</p>
+                            </div>
+                        </li>
                     </ul>
                 </aside>
             </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 Fintrack. All rights reserved.</p>
+
+    <footer class="bg-gray-900 text-gray-300 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Fintrack. All rights reserved. | Manage your finances with confidence.</p>
+        </div>
     </footer>
     
     <script src="/script.js"></script>

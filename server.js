@@ -41,22 +41,6 @@ db.serialize(function() {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// JWT verification middleware
-function verifyToken(req, res, next) {
-  var token = req.cookies ? req.cookies.token : null;
-  if (!token) {
-    return res.redirect('/login');
-  }
-  try {
-    var decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (err) {
-    res.redirect('/login');
-  }
-}
 
 // Simple cookie parsing (for JWT in cookie)
 app.use(function(req, res, next) {
@@ -82,11 +66,15 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Redirect authenticated users away from login/register
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Redirect authenticated users away from login/register pages to dashboard
 app.use(function(req, res, next) {
-  if (req.user && (req.path === '/login' || req.path === '/register')) {
+  if (req.user && (req.path === '/login' || req.path === '/register' || 
+                   req.path === '/login/index.html' || req.path === '/register/index.html')) {
     return res.redirect('/dashboard');
   }
+  console.log(req.user);
   next();
 });
 
@@ -163,6 +151,21 @@ app.get('/logout', function (req, res) {
   res.setHeader('Set-Cookie', 'token=; Path=/; Max-Age=0');
   res.redirect('/');
 });
+
+// JWT verification middleware
+function verifyToken(req, res, next) {
+  var token = req.cookies ? req.cookies.token : null;
+  if (!token) {
+    return res.redirect('/login');
+  }
+  try {
+    var decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    res.redirect('/login');
+  }
+}
 
 // Transaction API endpoints
 // GET all transactions for user
